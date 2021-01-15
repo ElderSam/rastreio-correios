@@ -28,7 +28,6 @@
 			$output = curl_exec($ch);
 			curl_close($ch);
 
-
 			$out = explode("table class=\"listEvent sro\">",$output);
 
 			if(isset($out[1])){
@@ -46,7 +45,6 @@
 					$output = str_replace("&nbsp;","",$output);
 					$output = str_replace("<td class=\"sroDtEvent\" valign=\"top\">","",$output);
 					$output = explode("<tr>",$output);
-
 
 					$novo_array = array();
 
@@ -85,7 +83,6 @@
 					 header('Content-type: application/json');
 					 $json = json_encode($jsonObcject);
 					 echo $json;
-
 
 			}else{
 
