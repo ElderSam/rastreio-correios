@@ -1,0 +1,14 @@
+{
+    "name": "eldersam/rastreio_correios",
+    "description": "Rastreio de Objetos",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ElderSam",
+            "email": "eldersamuel98@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
