@@ -1,0 +1,22 @@
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <form method="get">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="digite o código" id="object" name="name">
+                <button class="btn btn-danger">Rastrear</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+        let btn = document.querySelector('button');
+        let object = document.querySelector('#object');
+
+        // Send form
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            location.href = `/track/${object.value}`;
+        });
+
+       
+    </script>
