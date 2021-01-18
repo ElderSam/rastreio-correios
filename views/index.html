@@ -14,8 +14,9 @@
         // Send form
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-
-            location.href = `/track/${object.value}`;
+            
+            if(object.value != '')
+              location.href = `/track/${object.value}`;
         });
 
        

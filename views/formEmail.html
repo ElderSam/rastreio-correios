@@ -1,0 +1,56 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+
+<form class="form-group" action="" method="post">
+    <h2>Enviar Rastreio por E-mail</h2>
+    <label for="email">Email</label>
+    <input type="email" placeholder="example@email" id="email" name="email">
+    <button id="sendMail">Enviar</button>
+
+</form>
+
+<script>
+    let form = document.querySelector('form');
+    let btn = document.querySelector('button');
+    let email = document.querySelector('#email');
+
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('clicked', email)
+        console.log('email:', email.value)
+
+        var urlParams = new URLSearchParams(window.location.search);
+        let obj = urlParams.get('object');
+        console.log('code:', obj); 
+
+        x = document.createTextNode('enviando ...')
+        form.appendChild(x)
+
+        fetch(`/email/send/${email.value}?object=${obj}`)
+        .then(response => response.json())
+        .then((response) => {
+            console.log(response)
+
+            if(response.error) {
+                Swal.fire(
+                    'Ah não!',
+                    response.msg,
+                    'error'
+                )
+            }else {
+                Swal.fire(
+                    'Uhuu!',
+                    response.msg,
+                    'success'
+                )
+
+                form.removeChild(x)
+            }
+            
+        })
+        .catch((err) => {
+            console.warn(err)
+        })
+    });
+</script>

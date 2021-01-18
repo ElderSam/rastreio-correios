@@ -1,0 +1,58 @@
+/* CSS - TRACK PAGE RESPONSE */
+body {
+    font-family: Arial;
+    font-size: 14px;
+}
+
+h3 {
+    color: rgb(40, 130, 200);
+}
+
+#rastreio {
+    margin: auto;
+    width: 600px;
+}
+
+#options {
+    display: flex;
+    justify-content: space-evenly;
+    color: rgb(220, 0, 0);
+}
+
+#options i {
+    cursor: pointer;
+}
+
+#options i:hover {
+    
+    color: red;
+}
+
+#header {
+    border-bottom: 1px dotted black;
+}
+
+.div-state{
+    color: grey;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    border-bottom: 1px dotted black;
+    margin: auto;
+    line-height: 1.5;
+    height: 70px;  
+}
+
+.div-state:hover {
+    background-color: lightyellow;
+}
+
+.div-state .state-left {
+    width: 100px;
+}
+
+.div-state .state-right {
+    margin-left: 1rem;
+    text-align: left;
+    width: 500px;
+}

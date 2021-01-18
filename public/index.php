@@ -9,6 +9,9 @@ use Slim\Factory\AppFactory;
 require __DIR__ . '/../vendor/autoload.php';
 
 use \Classes\Page;
+use \Classes\Track;
+use \Classes\Mail;
+
 
 /**
  * Instantiate App
@@ -36,7 +39,6 @@ $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 
-
 $app->get('/', function (Request $request, Response $response, $args) {
 
     $page = new Page();
@@ -44,42 +46,52 @@ $app->get('/', function (Request $request, Response $response, $args) {
     exit;
 });
 
-// Define app routes
+/* Define app routes ----------------------------------------------------------------------- */
+// return page with track response (html)
 $app->get('/track/{code}', function (Request $request, Response $response, $args) {
     $obj = $args['code']; //"CODIGO DE RASTREIO"
 
     /*$response->getBody()->write("Hello, $obj");
     return $response;*/
+    $page = new Page([
+        "header"=>true,
+        "footer"=>false
+    ]);
 
-    /* https://m.correios.com.br/enviar-e-receber/precisa-de-ajuda/manual_rastreamentoobjetosws.pdf
+    $page->setTpl("headerResult");
 
-    Para buscar o status do objeto , basta enviar uma requisição
-    para o arquivo " rastreio.php " dentro de " api " .
-    O arquivo " rastreio.php " buscara o status do objeto no próprio site dos correios
-    */
- 
-    $url = "http://localhost/api/rastreio.php?obj={$obj}";
-    $rastreio = file_get_contents($url);
+    $track = new Track();
+    $html = $track->trackObject($obj);
+    $response->getBody()->write($html);
+    return $response;
+    exit;
+});
 
-    /*$rastreio = json_encode([
-        ['date'=> '12/12/2020',
-            'hour'=> '02:22',
-            'location'=> 'Macapa/AP',
-            'action'=> 'sdga ',
-            'message'=> 'sdga'
-        ],
-        [
-            'date'=> '13/01/2021',
-            'hour'=> '23:12',
-            'location'=> 'Sao Paulo/SP',
-            'action'=> 'KLA JGO4 GKL4Ç H',
-            'message'=> 'LASJG RJÇ KRJÇ HOI OEJ EOTHJAEOIT'
-        ]
-    ]);*/
-    //echo $rastreio; // imprime o JSON da resposta do rastreio
+// return JSON with API response 
+$app->get('/api/{code}', function (Request $request, Response $response, $args) {
+    $obj = $args['code'];
+    $track = new Track();
+    echo $track->getJSON($obj);
+    exit;
+});
 
-    require_once('./generateHTML.php');
-    generateHTML($rastreio, $obj);
+$app->get('/email', function (Request $request, Response $response, $args) {
+    $page = new Page();
+    $page->setTpl("formEmail");
+    exit;
+});
+
+// sends the response to an email
+$app->get('/email/send/{email}', function (Request $request, Response $response, $args) {
+    $toAdress = $args['email'];
+
+    //value of GET param
+    $obj = $request->getUri()->getQuery();
+    $obj = explode('=', $obj);
+
+    $track = new Track();
+    $html = $track->trackObject($obj[1]);
+    echo $track->sendMail($toAdress, $html);
     exit;
 });
 
