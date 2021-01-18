@@ -95,5 +95,17 @@ $app->get('/email/send/{email}', function (Request $request, Response $response,
     exit;
 });
 
+$app->get('/pdf/view/{object}', function (Request $request, Response $response, $args) {
+    $obj = $args['object'];
+    echo $obj;
+    $track = new Track();
+    $html = $track->trackObject($obj);
+    print_r($html);
+    //$track->getPDF($obj, $html);
+    /*$response->getBody()->write($html);
+    return $response;*/
+    exit;
+});
+
 // Run app
 $app->run();

@@ -2,6 +2,8 @@
 
 namespace Classes;
 
+use \Classes\Utils\myPDF;
+
 /* https://m.correios.com.br/enviar-e-receber/precisa-de-ajuda/manual_rastreamentoobjetosws.pdf
 
 Para buscar o status do objeto , basta enviar uma requisição
@@ -59,6 +61,22 @@ class Track
     
         //se estiver tudo ok, então envia o e-mail
         return $mail->sendMail($toAdress, $toName, $subject, $html);
+    }
+
+    public function getPDF($obj, $html)
+    {
+        $pdf = new myPDF();
+
+        $file_name = $obj;
+        $content = file_get_contents('http://localhost/views/header.html');
+        $content .= file_get_contents('http://localhost/views/headerResult.html');
+       
+        $html = $content . $html;
+        echo $html;
+        /*$pdf->createPDF($file_name, $html);
+        $pdf->display();*/
+
+
     }
 }
 ?>

@@ -22,7 +22,10 @@ function generateHTML($rastreio, $obj)
                 <a href='/email?object=$obj'>
                     <i class='far fa-envelope fa-3x'></i>
                 </a>
-                <i class='fas fa-file-download fa-3x'></i>
+
+                <a href='/pdf/view/$obj'>
+                    <i class='fas fa-file-download fa-3x'></i>
+                </a>
             </div>
             <div id='header'>
             
